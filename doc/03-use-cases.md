@@ -15,25 +15,38 @@ Récits principaux
 ### Diagramme Use Case (Mermaid)
 
 ```mermaid
-%%{init: { 'theme':'default' }}%%
-actor Employee as E
-actor Manager as M
-actor HR as H
+flowchart LR
+	%% acteurs
+	E([Employé])
+	M([Manager])
+	H([RH])
 
-E -- (Pointage de présence)
-E -- (Demande de congé)
-E -- (Consulter bulletins et solde)
+	%% cas d'utilisation
+	UC1[Pointage de présence]
+	UC2[Demande de congé]
+	UC3[Consulter bulletins et solde]
+	UC4[Valider/Refuser congé]
+	UC5[Traiter demande d'explication]
+	UC6[Gérer contrats]
+	UC7[Déclencher paie]
+	UC8[Consulter rapports]
 
-M -- (Valider/Refuser congé)
-M -- (Traiter demande d'explication)
+	%% relations
+	E --> UC1
+	E --> UC2
+	E --> UC3
+	M --> UC4
+	M --> UC5
+	H --> UC6
+	H --> UC7
+	H --> UC8
 
-H -- (Gérer contrats)
-H -- (Déclencher paie)
-H -- (Consulter rapports)
+	%% note (lié visuellement à la paie)
+	note_paie["Synthèse automatique : présences, congés, primes, retenues."]
+	UC7 --> note_paie
 
-note right of (Déclencher paie)
-  Synthèse automatiques : présences, congés, primes, retenues.
-end note
+	classDef actorStyle fill:#f3f4f6,stroke:#333,stroke-width:1px;
+	class E,M,H actorStyle;
 ```
 
 Chaque cas d'utilisation doit être accompagné d'un scénario happy-path et d'au moins un scénario alternatif (ex : manager absent -> escalade vers RH).
