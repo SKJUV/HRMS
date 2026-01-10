@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS employe (
   FOREIGN KEY (id_departement) REFERENCES departement(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_employe_matricule ON employe(matricule(40));
-CREATE INDEX IF NOT EXISTS idx_employe_manager ON employe(id_manager(36));
+CREATE INDEX IF NOT EXISTS idx_employe_matricule ON employe(matricule);
+CREATE INDEX IF NOT EXISTS idx_employe_manager ON employe(id_manager);
 
 -- Presence
 CREATE TABLE IF NOT EXISTS presence (
@@ -41,13 +41,12 @@ CREATE TABLE IF NOT EXISTS presence (
   date_jour DATE NOT NULL,
   heure_arrivee TIME NULL,
   heure_depart TIME NULL,
-  status ENUM('ON_TIME','LATE','ABSENT') NOT NULL DEFAULT 'ON_TIME',
-  id_justificatif CHAR(36) NULL,
+  status ENUM('ON_TIME','LATE','ABSENT','PENDING') NOT NULL DEFAULT 'PENDING',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_presence_employe_date ON presence(id_employe(36), date_jour);
+CREATE INDEX IF NOT EXISTS idx_presence_employe_date ON presence(id_employe, date_jour);
 
 -- Justificatif
 CREATE TABLE IF NOT EXISTS justificatif (
@@ -70,7 +69,7 @@ CREATE TABLE IF NOT EXISTS solde_conge (
   FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_solde_employe_type ON solde_conge(id_employe(36), type_conge);
+CREATE INDEX IF NOT EXISTS idx_solde_employe_type ON solde_conge(id_employe, type_conge);
 
 -- DemandeConge
 CREATE TABLE IF NOT EXISTS demande_conge (
@@ -84,10 +83,12 @@ CREATE TABLE IF NOT EXISTS demande_conge (
   id_rh_avis CHAR(36) NULL,
   commentaire TEXT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
+  FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE,
+  FOREIGN KEY (id_manager_avis) REFERENCES employe(id) ON DELETE SET NULL,
+  FOREIGN KEY (id_rh_avis) REFERENCES employe(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_demande_employe ON demande_conge(id_employe(36), statut(20));
+CREATE INDEX IF NOT EXISTS idx_demande_employe ON demande_conge(id_employe, statut);
 
 -- BulletinPaie
 CREATE TABLE IF NOT EXISTS bulletin_paie (
@@ -104,7 +105,7 @@ CREATE TABLE IF NOT EXISTS bulletin_paie (
   FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE UNIQUE INDEX IF NOT EXISTS ux_bulletin_employe_mois ON bulletin_paie(id_employe(36), mois_annee(7));
+CREATE UNIQUE INDEX IF NOT EXISTS ux_bulletin_employe_mois ON bulletin_paie(id_employe, mois_annee);
 
 -- Prime
 CREATE TABLE IF NOT EXISTS prime (
@@ -116,7 +117,7 @@ CREATE TABLE IF NOT EXISTS prime (
   FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_prime_employe_mois ON prime(id_employe(36), mois_annee(7));
+CREATE INDEX IF NOT EXISTS idx_prime_employe_mois ON prime(id_employe, mois_annee);
 
 -- Retenue
 CREATE TABLE IF NOT EXISTS retenue (
@@ -128,7 +129,7 @@ CREATE TABLE IF NOT EXISTS retenue (
   FOREIGN KEY (id_employe) REFERENCES employe(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE INDEX IF NOT EXISTS idx_retenue_employe_mois ON retenue(id_employe(36), mois_annee(7));
+CREATE INDEX IF NOT EXISTS idx_retenue_employe_mois ON retenue(id_employe, mois_annee);
 
 -- Table pour séquence matricule (MariaDB n'a pas de sequence native avant 10.3)
 CREATE TABLE IF NOT EXISTS matricule_seq (
