@@ -13,6 +13,8 @@ erDiagram
     EMPLOYE ||--o{ SOLDE_CONGE : has
     EMPLOYE ||--o{ BULLETIN_PAIE : receives
     DEPARTEMENT ||--o{ EMPLOYE : contains
+    PRESENCE ||--o{ JUSTIFICATIF : has
+
 
     EMPLOYE {
       string id PK "uuid or serial"
@@ -34,11 +36,10 @@ erDiagram
     PRESENCE {
       string id PK
       string id_employe FK
-      datetime date
+      date date_jour
       time heure_arrivee
       time heure_depart
-      enum status "ON_TIME, LATE, ABSENT"
-      string id_justificatif FK
+      string status
     }
 
     JUSTIFICATIF {
@@ -53,7 +54,7 @@ erDiagram
     SOLDE_CONGE {
       string id PK
       string id_employe FK
-      enum type_conge "PAID,SICK,UNPAID"
+      string type_conge
       decimal jours_restants
     }
 
@@ -62,9 +63,10 @@ erDiagram
       string id_employe FK
       date debut
       date fin
-      enum statut "PENDING, APPROVED, REJECTED"
-      string id_manager_avis
-      string id_rh_avis
+      string type_conge
+      string statut
+      string id_manager_avis FK
+      string id_rh_avis FK
     }
 
     BULLETIN_PAIE {

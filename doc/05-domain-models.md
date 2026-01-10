@@ -11,8 +11,10 @@ Entités clés et responsabilités
   - Méthodes : calculerAnciennete(), estActif(), getMatriculeFormate()
 
 - Presence
-  - Attributs : id, idEmploye, date, heureArrivee, heureDepart, status
-  - Méthodes : verifierRetard(heureStandard, margeToleranceMin), calculerTempsPresence()
+  - Attributs : id, idEmploye, date, heureArrivee, heureDepart, status (ON_TIME, LATE, ABSENT, PENDING)
+  - Méthodes : verifierRetard(heureStandard, margeToleranceMin), calculerTempsPresence(), estJustifiee()
+- Justificatif
+  - Attributs : id, idPresence, type, urlDocument, commentaire
 
 - DemandeConge
   - Attributs : id, idEmploye, debut, fin, statut

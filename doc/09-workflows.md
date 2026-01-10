@@ -4,15 +4,15 @@
 
 ```mermaid
 flowchart TD
-  A[Employé pointe] --> B{Système récupère heure standard}
-  B --> C[Compare arrivée avec heureStandard]
-  C --> D{Retard > marge ?}
-  D -- Non --> E[Status = ON_TIME]
-  D -- Oui --> F[Status = LATE]
-  F --> G[Créer DemandeExplication]
-  E --> H[Enregistrer Presence]
-  G --> H
-  H --> I[Notifie manager si incident]
+  A[Employé pointe] --> B{Heure standard ?}
+  B --> C[Status = PENDING]
+  C --> D{Vérifier heure}
+  D -->|Retard > marge| F[Status = LATE]
+  D -->|Retard <= marge| E[Status = ON_TIME]
+  F --> G[Attente Justificatif]
+  G --> H[Justificatif validé]
+  E --> I[Enregistrer Presence]
+  H --> I
 ```
 
 ### Flux Fin de Mois (Activity)

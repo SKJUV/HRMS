@@ -26,6 +26,14 @@ classDiagram
       +Duration calculerTempsPresence()
     }
 
+    class Justificatif {
+      +UUID id
+      +UUID idPresence
+      +String type
+      +String urlDocument
+      +String commentaire
+    }
+
     class DemandeConge {
       +UUID id
       +UUID idEmploye
@@ -52,6 +60,7 @@ classDiagram
     Employe "1" o-- "*" Presence : has
     Employe "1" o-- "*" DemandeConge : files
     Employe "1" o-- "*" BulletinPaie : receives
+    Presence "1" o-- "*" Justificatif : has
 
       %% UI layer (JavaFX)
       class MainApp {
@@ -100,7 +109,6 @@ classDiagram
   - Séparer la logique UI et la logique métier : Controller appelle `service` qui appelle `repository`.
   - Favoriser des DTOs pour l'échange entre client JavaFX et backend REST (JSON).
   - Tester la logique métier avec JUnit (mock des repos). Test UI léger via TestFX si nécessaire.
-```
 
 ### Méthodes clés et logique
 

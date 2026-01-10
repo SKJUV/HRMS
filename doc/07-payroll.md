@@ -37,7 +37,7 @@ sequenceDiagram
     PayrollService->>PresenceRepo: Récupérer présences
     PayrollService->>CongeRepo: Récupérer congés
     PayrollService->>PrimeRepo: Récupérer primes
-    PayrollService-->>PayrollService: Calculs retenues/cotisations
+    PayrollService->>PayrollService: Calculs retenues/cotisations
     PayrollService->>BulletinRepo: Persister BulletinPaie (immuable)
     PayrollService-->>RH: Retourne rapport et bulletins
 ```
