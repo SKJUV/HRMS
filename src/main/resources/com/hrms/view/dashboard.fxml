@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.hrms.controller.DashboardController"
+            prefHeight="600.0" prefWidth="900.0"
+            styleClass="root">
+    
+    <!-- En-tête -->
+    <top>
+        <VBox styleClass="header">
+            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+                <Label text="HRMS - Tableau de Bord" textFill="white">
+                    <font>
+                        <Font name="System Bold" size="20"/>
+                    </font>
+                </Label>
+                
+                <Region HBox.hgrow="ALWAYS"/>
+                
+                <Label fx:id="userInfoLabel" text="Utilisateur" textFill="white">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+                
+                <Button fx:id="logoutButton" text="Déconnexion" onAction="#handleLogout" 
+                        styleClass="btn-danger"/>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- Menu latéral -->
+    <left>
+        <VBox spacing="5" style="-fx-background-color: #34495e; -fx-padding: 10;" prefWidth="200">
+            <Label text="MENU" textFill="white" style="-fx-font-weight: bold; -fx-padding: 10 0 10 0;"/>
+            
+            <Button text="📊 Tableau de Bord" onAction="#showDashboard" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Separator/>
+            
+            <Label text="GESTION" textFill="white" style="-fx-font-size: 11; -fx-padding: 10 0 5 0;"/>
+            
+            <Button fx:id="employeesMenuButton" text="👥 Employés" onAction="#showEmployees" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Button fx:id="departmentsMenuButton" text="🏢 Départements" onAction="#showDepartments" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Button fx:id="attendanceMenuButton" text="⏰ Présences" onAction="#showAttendance" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Button fx:id="leaveMenuButton" text="🏖️ Congés" onAction="#showLeave" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Separator/>
+            
+            <Label text="ADMINISTRATION" textFill="white" style="-fx-font-size: 11; -fx-padding: 10 0 5 0;"/>
+            
+            <Button fx:id="usersMenuButton" text="👤 Utilisateurs" onAction="#showUsers" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Button fx:id="settingsMenuButton" text="⚙️ Paramètres" onAction="#showSettings" 
+                    maxWidth="Infinity" styleClass="menu-button"/>
+            
+            <Region VBox.vgrow="ALWAYS"/>
+            
+            <Separator/>
+            
+            <Label fx:id="versionLabel" text="Version 1.0" textFill="#95a5a6" 
+                   style="-fx-font-size: 10; -fx-padding: 5;"/>
+        </VBox>
+    </left>
+    
+    <!-- Contenu central -->
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-background-color: #ecf0f1;">
+            <VBox alignment="CENTER" spacing="20">
+                <padding>
+                    <Insets top="50" right="50" bottom="50" left="50"/>
+                </padding>
+                
+                <Label text="Bienvenue dans HRMS" styleClass="welcome-title">
+                    <font>
+                        <Font name="System Bold" size="28"/>
+                    </font>
+                </Label>
+                
+                <Label text="Sélectionnez une option dans le menu pour commencer" 
+                       style="-fx-text-fill: #7f8c8d;">
+                    <font>
+                        <Font size="14"/>
+                    </font>
+                </Label>
+                
+                <!-- Cartes de statistiques (exemple) -->
+                <GridPane hgap="20" vgap="20" alignment="CENTER">
+                    <VBox alignment="CENTER" spacing="10" styleClass="stat-card" 
+                          prefWidth="150" prefHeight="120" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="👥" style="-fx-font-size: 32;"/>
+                        <Label text="Employés" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="employeeCountLabel" text="0" style="-fx-font-size: 24; -fx-text-fill: #3498db;"/>
+                    </VBox>
+                    
+                    <VBox alignment="CENTER" spacing="10" styleClass="stat-card" 
+                          prefWidth="150" prefHeight="120" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="🏢" style="-fx-font-size: 32;"/>
+                        <Label text="Départements" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="departmentCountLabel" text="0" style="-fx-font-size: 24; -fx-text-fill: #e74c3c;"/>
+                    </VBox>
+                    
+                    <VBox alignment="CENTER" spacing="10" styleClass="stat-card" 
+                          prefWidth="150" prefHeight="120" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Label text="⏰" style="-fx-font-size: 32;"/>
+                        <Label text="Présences" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="attendanceCountLabel" text="0" style="-fx-font-size: 24; -fx-text-fill: #2ecc71;"/>
+                    </VBox>
+                </GridPane>
+                
+            </VBox>
+        </StackPane>
+    </center>
+    
+</BorderPane>

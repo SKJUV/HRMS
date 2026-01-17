@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.hrms.controller.UserManagementController"
+      spacing="15" style="-fx-background-color: white;">
+    
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    
+    <!-- Titre -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Label text="Gestion des Utilisateurs">
+            <font>
+                <Font name="System Bold" size="20"/>
+            </font>
+        </Label>
+        
+        <Region HBox.hgrow="ALWAYS"/>
+        
+        <Button fx:id="addUserButton" text="➕ Nouvel Utilisateur" onAction="#handleAddUser" 
+                styleClass="btn-success"/>
+        
+        <Button text="🔄 Actualiser" onAction="#refreshTable" styleClass="btn-default"/>
+    </HBox>
+    
+    <Separator/>
+    
+    <!-- Barre de recherche -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Rechercher:"/>
+        <TextField fx:id="searchField" promptText="Nom d'utilisateur..." prefWidth="250"/>
+        <Button text="🔍 Rechercher" onAction="#handleSearch"/>
+    </HBox>
+    
+    <!-- Tableau des utilisateurs -->
+    <TableView fx:id="usersTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Nom d'utilisateur" prefWidth="200">
+                <cellValueFactory>
+                    <PropertyValueFactory property="username"/>
+                </cellValueFactory>
+            </TableColumn>
+            
+            <TableColumn text="Rôle" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="role"/>
+                </cellValueFactory>
+            </TableColumn>
+            
+            <TableColumn text="Actif" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="active"/>
+                </cellValueFactory>
+            </TableColumn>
+            
+            <TableColumn text="Date de création" prefWidth="180">
+                <cellValueFactory>
+                    <PropertyValueFactory property="createdAt"/>
+                </cellValueFactory>
+            </TableColumn>
+            
+            <TableColumn text="Dernière connexion" prefWidth="180">
+                <cellValueFactory>
+                    <PropertyValueFactory property="lastLogin"/>
+                </cellValueFactory>
+            </TableColumn>
+            
+            <TableColumn text="Actions" prefWidth="150">
+                <cellFactory>
+                    <fx:reference source="actionCellFactory"/>
+                </cellFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+    
+    <!-- Barre d'informations -->
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label fx:id="statusLabel" text="Aucun utilisateur sélectionné" 
+               style="-fx-text-fill: #7f8c8d;"/>
+        
+        <Region HBox.hgrow="ALWAYS"/>
+        
+        <Label fx:id="totalUsersLabel" text="Total: 0 utilisateurs" 
+               style="-fx-font-weight: bold;"/>
+    </HBox>
+    
+</VBox>
